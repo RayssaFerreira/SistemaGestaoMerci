@@ -397,9 +397,18 @@ public class CadastroDeUsuarioForm extends javax.swing.JFrame {
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
         // TODO add your handling code here:
-        CadastroDeUsuarioForm cadastroUsuario = new CadastroDeUsuarioForm();
-        cadastroUsuario.setVisible(true);
-        dispose();
+
+        int resposta;
+        String mensagem = "Deseja Cadastrar Usuário? ";
+        String titulo = "Cadastro Novo Usuário";
+        resposta = JOptionPane.showConfirmDialog(this, mensagem, titulo, JOptionPane.YES_NO_OPTION);
+
+        if (resposta == JOptionPane.YES_NO_OPTION) {
+            CadastroDeUsuarioForm cadastroUsuario = new CadastroDeUsuarioForm();
+            cadastroUsuario.setVisible(true);
+            dispose();
+        }
+
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
