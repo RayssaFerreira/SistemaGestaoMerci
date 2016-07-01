@@ -25,6 +25,7 @@ public class UsuarioBO {
         this.verificaUsuarioLogin(usuario);
         usuarioDAO.inserirUsuario(usuario);
     }
+
     public void verificaUsuarioLogin(Usuario usuario) throws SQLException {
         Usuario usuarioExistente = null;
         UsuarioDAO usuarioDAO = new UsuarioDAO();
@@ -33,20 +34,28 @@ public class UsuarioBO {
             throw new UsuarioLoginExistenteException();
         }
     }
-    public Usuario pesquisarLoginCadastrado(Usuario usuario) throws SQLException{
+
+    public Usuario pesquisarLoginCadastrado(Usuario usuario) throws SQLException {
         Usuario usuarioBuscado = null;
         UsuarioDAO usuarioDAO = new UsuarioDAO();
         usuarioBuscado = usuarioDAO.buscarLoginUsuario(usuario.getLogin());
         if (usuarioBuscado == null) {
             throw new LoginNaoEncontradoException();
-        }else{
+        } else {
             return usuarioBuscado;
         }
     }
+
     public void removerUsuario(Usuario usuario) throws SQLException {
         UsuarioDAO usuarioDAO = new UsuarioDAO();
         usuarioDAO.removerUsuario(usuario.getLogin());
     }
+
+    public void alterarUsuario(Usuario usuario) throws Exception {
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        usuarioDAO.alterarUsuario(usuario);
+    }
+
     public void loginUsuario(Usuario usuario) {
         UsuarioDAO usuarioDAO = new UsuarioDAO();
         if (usuario.getLogin().isEmpty() || usuario.getSenha().isEmpty()) {
@@ -56,19 +65,15 @@ public class UsuarioBO {
             throw new LoginInvalidoException();
         }
     }
+
     public List<Usuario> buscarTodosUsuarios() throws SQLException {
         UsuarioDAO usuarioDAO = new UsuarioDAO();
         return usuarioDAO.buscarTodosUsuarios();
     }
-    public void atualizarUsuarios(Usuario usuario) throws SQLException{
+
+    public void atualizarUsuarios(Usuario usuario) throws SQLException {
         UsuarioDAO usuarioDAO = new UsuarioDAO();
         usuarioDAO.atualizarUsuario(usuario);
     }
-    public void alterarUsuario(Usuario usuario) throws Exception {
-        UsuarioDAO usuarioDAO = new UsuarioDAO();
-        usuarioDAO.alterarUsuario(usuario);
-  }
-   
 
-   
 }

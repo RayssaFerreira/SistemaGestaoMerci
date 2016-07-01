@@ -33,29 +33,25 @@ public class UsuarioDAO {
         Connection conexao = null;
         PreparedStatement comando = null;
         try {
-            //Recupera a conexão
+
             conexao = BancoDadosUtil.getConnection();
-            //Cria o comando de inserirUsuario dados
             comando = conexao.prepareStatement(SQL_INSERT);
-            //Atribui os parâmetros (Note que no BD o index inicia por 1)
 
             comando.setString(1, usuario.getNome());
             comando.setString(2, usuario.getLogin());
             comando.setString(3, usuario.getSenha());
             comando.setString(4, usuario.getGrupo());
-            //Executa o comando
+
             comando.execute();
-            //Persiste o comando no banco de dados
             conexao.commit();
         } catch (Exception e) {
-            //Caso aconteça alguma exeção é feito um rollback para o banco de
-            //dados retornar ao seu estado anterior.
+
             if (conexao != null) {
                 conexao.rollback();
             }
             throw e;
         } finally {
-            //Todo objeto que referencie o banco de dados deve ser fechado
+
             BancoDadosUtil.fecharChamadasBancoDados(conexao, comando);
         }
     }
@@ -64,25 +60,50 @@ public class UsuarioDAO {
         Connection conexao = null;
         PreparedStatement comando = null;
         try {
-            //Recupera a conexão
+
             conexao = BancoDadosUtil.getConnection();
-            //Cria o comando de inserirUsuario dados
             comando = conexao.prepareStatement(SQL_REMOVER_USUARIO);
-            //Atribui os parâmetros (Note que no BD o index inicia por 1)
+
             comando.setString(1, login);
-            //Executa o comando
+
             comando.execute();
-            //Persiste o comando no banco de dados
             conexao.commit();
         } catch (Exception e) {
-            //Caso aconteça alguma exeção é feito um rollback para o banco de
-            //dados retornar ao seu estado anterior.
+
             if (conexao != null) {
                 conexao.rollback();
             }
             throw e;
         } finally {
-            //Todo objeto que referencie o banco de dados deve ser fechado
+
+            BancoDadosUtil.fecharChamadasBancoDados(conexao, comando);
+        }
+    }
+
+    public void alterarUsuario(Usuario usuario) throws Exception {
+        Connection conexao = null;
+        PreparedStatement comando = null;
+
+        try {
+
+            conexao = BancoDadosUtil.getConnection();
+            comando = conexao.prepareStatement(SQL_UPDATE);
+
+            comando.setString(1, usuario.getNome());
+            comando.setString(2, usuario.getLogin());
+            comando.setString(3, usuario.getSenha());
+            comando.setString(4, usuario.getGrupo());
+            comando.setInt(5, usuario.getId());
+
+            comando.execute();
+            conexao.commit();
+        } catch (Exception e) {
+
+            if (conexao != null) {
+                conexao.rollback();
+            }
+            throw e;
+        } finally {
             BancoDadosUtil.fecharChamadasBancoDados(conexao, comando);
         }
     }
@@ -131,7 +152,7 @@ public class UsuarioDAO {
             }
 
         } finally {
-            //Todo objeto que referencie o banco de dados deve ser fechado
+
             BancoDadosUtil.fecharChamadasBancoDados(conexao, comando);
         }
 
@@ -200,61 +221,25 @@ public class UsuarioDAO {
         Connection conexao = null;
         PreparedStatement comando = null;
         try {
-            //Recupera a conexão
+
             conexao = BancoDadosUtil.getConnection();
-            //Cria o comando de inserirUsuario dados
             comando = conexao.prepareStatement(SQL_UPDATE_SENHA);
-            //Atribui os parâmetros (Note que no BD o index inicia por 1)
+
             comando.setString(1, usuario.getSenha());
             comando.setInt(2, usuario.getId());
-            //Executa o comando
+
             comando.execute();
-            //Persiste o comando no banco de dados
             conexao.commit();
         } catch (Exception e) {
-            //Caso aconteça alguma exeção é feito um rollback para o banco de
-            //dados retornar ao seu estado anterior.
+
             if (conexao != null) {
                 conexao.rollback();
             }
             throw e;
         } finally {
-            //Todo objeto que referencie o banco de dados deve ser fechado
+
             BancoDadosUtil.fecharChamadasBancoDados(conexao, comando);
         }
     }
 
-    public void alterarUsuario(Usuario usuario) throws Exception {
-        Connection conexao = null;
-        PreparedStatement comando = null;
-
-        try {
-            //Recupera a conexão
-            conexao = BancoDadosUtil.getConnection();
-            //Cria o comando de inserirUsuario dados
-            comando = conexao.prepareStatement(SQL_UPDATE);
-            //Atribui os parâmetros (Note que no BD o index inicia por 1)
-
-            comando.setString(1, usuario.getNome());
-            comando.setString(2, usuario.getLogin());
-            comando.setString(3, usuario.getSenha());
-            comando.setString(4, usuario.getGrupo());
-            comando.setInt(5, usuario.getId());
-
-            //Executa o comando
-            comando.execute();
-            //Persiste o comando no banco de dados
-            conexao.commit();
-        } catch (Exception e) {
-            //Caso aconteça alguma exeção é feito um rollback para o banco de
-            //dados retornar ao seu estado anterior.
-            if (conexao != null) {
-                conexao.rollback();
-            }
-            throw e;
-        } finally {
-            //Todo objeto que referencie o banco de dados deve ser fechado
-            BancoDadosUtil.fecharChamadasBancoDados(conexao, comando);
-        }
-    }
 }
